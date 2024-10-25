@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Destinations - Travel Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjloM3lzcmFpZGUxNWllb3FsYXhtdzEzbXpzamwxZTd4aXNydXNqaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kDO5RDvqN0nLUxzN1i/giphy.webp') no-repeat center center/cover;
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        nav {
+            width: 100%;
+            padding: 1.5rem;
+            position: fixed;
+            top: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        nav h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffdd57;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffdd57;
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            animation: slideInDown 1.2s ease-out;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        .hero .btn {
+            padding: 1rem 2.5rem;
+            background-color: #ffdd57;
+            color: #333;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .hero .btn:hover {
+            transform: translateY(-5px);
+            background-color: #ffc107;
+        }
+
+        main {
+            padding: 4rem 2rem;
+        }
+
+        #services {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        #services h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service {
+            flex: 1;
+            max-width: 30%;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .service h3 {
+            font-size: 1.5rem;
+            color: #ffdd57;
+            margin-bottom: 1rem;
+        }
+
+        .service p {
+            color: #666;
+        }
+
+        #about {
+            background-color: #ffdd57;
+            padding: 3rem 2rem;
+            color: #333;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        #about p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+        }
+
+        #contact {
+            background-color: #f1f1f1;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form input, form textarea {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: #ffdd57;
+        }
+
+        form button {
+            padding: 1rem 2rem;
+            background-color: #ffdd57;
+            border: none;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #ffc107;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            .services-container {
+                flex-direction: column;
+            }
+
+            .hero h2 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Dream Destinations</h1>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <section class="hero">
+            <h2>Discover the World with Dream Destinations</h2>
+            <p>Your luxury vacation starts here. Explore exotic locations.</p>
+            <a href="#services" class="btn">Explore Now</a>
+        </section>
+    </header>
+
+    <main>
+        <section id="services">
+            <h2>Our Services</h2>
+            <div class="services-container">
+                <div class="service">
+                    <img src=https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tripadvisor.com.ph%2FAirline_Review-d8729130-Reviews-Philippine-Airlines-PAL&psig=AOvVaw1sozzKiSqyJzCKkrRaZ5-o&ust=1729445135721000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNDo96r7mokDFQAAAAAdAAAAABAQ alt="Flight Booking">
+                    <h3>Flight Booking</h3>
+                    <p>Book your international or domestic flights at unbeatable prices with our expert travel planners.</p>
+                </div>
+                <div class="service">
+                    <img src=https://www.google.com/url?sa=i&url=https%3A%2F%2Fbilyonaryo.com%2F2023%2F08%2F12%2Fokada-manila-go-elevating-casino-experiences%2Fproperty%2F&psig=AOvVaw0aOiRJjjGR39WonX2cwypo&ust=1729445222277000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPCZ8dT7mokDFQAAAAAdAAAAABAR alt="Hotel Reservations">
+                    <h3>Luxury Hotel Reservations</h3>
+                    <p>Stay in world-class hotels at top destinations, tailored to your personal preferences and style.</p>
+                </div>
+                <div class="service">
+                    <img src=https://www.google.com/url?sa=i&url=https%3A%2F%2Fupsideph.com%2Fmakati-bgc-properties-for-sale%2F&psig=AOvVaw24dyMM5FVH3_ojmNxOAvMj&ust=1729445327983000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCx5Yb8mokDFQAAAAAdAAAAABAE alt="Tour Packages">
+                    <h3>Customized Tour Packages</h3>
+                    <p>Experience custom-tailored tours to the most captivating destinations around the world.</p>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About Dream Destinations</h2>
+            <p>Dream Destinations, owned by Dash Love Sander, is dedicated to creating luxury travel experiences. Whether you're looking for an adventure in the mountains or a relaxing getaway on a beach, our agency ensures you travel in style and comfort.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Get in Touch</h2>
+            <form>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    <main>
+</body>
+</html>

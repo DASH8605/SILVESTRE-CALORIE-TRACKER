@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calorie Tracker</title>
+  <style>
+    /* General Page Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #c4e0e5, #4ca1af);
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Main Container Styles */
+    .container {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      width: 500px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #4ca1af;
+      margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    /* Input and Button Styles */
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      background-color: #4ca1af;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 48%;
+    }
+
+    button:hover {
+      background-color: #3d7b87;
+    }
+
+    .reset-btn, .clear-log-btn {
+      background-color: #ff6f61;
+    }
+
+    .reset-btn:hover, .clear-log-btn:hover {
+      background-color: #e94e3e;
+    }
+
+    /* Log and Progress Bar Styles */
+    .log-container {
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+      background-color: #f7f7f7;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .log-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #fff;
+      border-left: 4px solid #4ca1af;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .log-item span {
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background-color: #e91e63;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #43a047;
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+      background-color: #f3f3f3;
+      border-radius: 10px;
+      margin-top: 20px;
+      height: 20px;
+      width: 100%;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .progress-bar {
+      background-color: #4ca1af;
+      height: 100%;
+      width: 0%;
+      border-radius: 10px;
+    }
+
+    .goal-section {
+      margin-top: 20px;
+    }
+
+    .goal-text {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Professional Calorie Tracker</h1>
+
+    <!-- Daily Goal Section -->
+    <div class="goal-section">
+      <p class="goal-text">Set Daily Calorie Goal:</p>
+      <input type="number" id="calorieGoal" placeholder="Daily Calorie Goal" min="1">
+    </div>
+
+    <!-- Input Section -->
+    <input type="text" id="foodItem" placeholder="Food Item (e.g., Apple)">
+    <input type="number" id="calories" placeholder="Calories per Serving" min="0">
+
+    <div>
+      <button onclick="addCalories()">Add Item</button>
+      <button class="reset-btn" onclick="resetTracker()">Reset Tracker</button>
+    </div>
+
+    <!-- Food Log -->
+    <div class="log-container" id="logContainer">
+      <h3>Food Log</h3>
+    </div>
+
+    <!-- Progress and Result Section -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="result">
+      <p>Total Calories: <span id="totalCalories">0</span> kcal</p>
+      <p>Calories Left: <span id="caloriesLeft">Set a goal</span> kcal</p>
+    </div>
+
+    <button class="clear-log-btn" onclick="clearLog()">Clear Food Log</button>
+  </div>
+
+  <script>
+    let totalCalories = 0;
+    let dailyGoal = 0;
+    const logContainer = document.getElementById('logContainer');
+    const progressBar = document.getElementById('progressBar');
+    const totalCaloriesDisplay = document.getElementById('totalCalories');
+    const caloriesLeftDisplay = document.getElementById('caloriesLeft');
+
+    // Function to add food items to the log
+    function addCalories() {
+      const foodItem = document.getElementById('foodItem').value;
+      const calories = document.getElementById('calories').value;
+
+      if (!foodItem || !calories || calories <= 0) {
+        alert("Please enter valid food item and calorie amount.");
+        return;
+      }
+
+      totalCalories += parseInt(calories);
+      updateTracker();
+
+      // Add item to the food log
+      const logItem = document.createElement('div');
+      logItem.classList.add('log-item');
+      logItem.innerHTML = `
+        <span>${foodItem} - ${calories} kcal</span>
+        <button class="remove-btn" onclick="removeItem(this, ${calories})">Remove</button>
+      `;
+      logContainer.appendChild(logItem);
+
+      document.getElementById('calories').value = '';
+      document.getElementById('foodItem').value = '';
+    }
+
+    // Function to update calorie totals and progress bar
+    function updateTracker() {
+      totalCaloriesDisplay.innerText = totalCalories;
+
+      // Calculate remaining calories
+      dailyGoal = document.getElementById('calorieGoal').value;
+      if (dailyGoal > 0) {
+        const remainingCalories = dailyGoal - totalCalories;
+        caloriesLeftDisplay.innerText = remainingCalories >= 0 ? remainingCalories : "Goal Exceeded!";
+        updateProgressBar();
+      }
+    }
+
+    // Function to update the progress bar
+    function updateProgressBar() {
+      if (dailyGoal > 0) {
+        const percentage = (totalCalories / dailyGoal) * 100;
+        progressBar.style.width = percentage > 100 ? '100%' : `${percentage}%`;
+      }
+    }
+
+    // Function to remove individual items
+    function removeItem(element, calories) {
+      totalCalories -= calories;
+      logContainer.removeChild(element.parentElement);
+      updateTracker();
+    }
+
+    // Function to reset the entire tracker
+    function resetTracker() {
+      totalCalories = 0;
+      dailyGoal = 0;
+      document.getElementById('calorieGoal').value = '';
+      updateTracker();
+      logContainer.innerHTML = '<h3>Food Log</h3>';
+      progressBar.style.width = '0%';
+    }
+
+    // Function to clear the food log only
+    function clearLog() {
+      logContainer.innerHTML = '<h3>Food Log</h3>';
+    }
+  </script>
+
+</body>
+</html>
+
